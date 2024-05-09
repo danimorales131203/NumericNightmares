@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class Snake : MonoBehaviour
@@ -10,10 +11,14 @@ public class Snake : MonoBehaviour
     public float speedMultiplier = 1f;
     public int initialSize = 4;
     public bool moveThroughWalls = false;
+    public Text infoText;
 
     private List<Transform> segments = new List<Transform>();
     private Vector2Int input;
     private float nextUpdate;
+
+    private string[] eatMessages = { "Fórmula de integración por partes", "∫udv= ** −∫v**", "∫udv= ** −∫vdu", "∫udv= uv −∫vdu" };
+    private int messageIndex = 0;
 
     private void Start()
     {
@@ -22,7 +27,6 @@ public class Snake : MonoBehaviour
 
     private void Update()
     {
-     
         if (direction.x != 0f)
         {
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
@@ -34,7 +38,6 @@ public class Snake : MonoBehaviour
                 input = Vector2Int.down;
             }
         }
-     
         else if (direction.y != 0f)
         {
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
@@ -50,30 +53,25 @@ public class Snake : MonoBehaviour
 
     private void FixedUpdate()
     {
-     
         if (Time.time < nextUpdate)
         {
             return;
         }
 
-     
         if (input != Vector2Int.zero)
         {
             direction = input;
         }
 
-     
         for (int i = segments.Count - 1; i > 0; i--)
         {
             segments[i].position = segments[i - 1].position;
         }
 
-     
         int x = Mathf.RoundToInt(transform.position.x) + direction.x;
         int y = Mathf.RoundToInt(transform.position.y) + direction.y;
         transform.position = new Vector2(x, y);
 
-     
         nextUpdate = Time.time + (1f / (speed * speedMultiplier));
     }
 
@@ -82,6 +80,12 @@ public class Snake : MonoBehaviour
         Transform segment = Instantiate(segmentPrefab);
         segment.position = segments[segments.Count - 1].position;
         segments.Add(segment);
+
+        if (messageIndex < eatMessages.Length)
+        {
+            infoText.text = eatMessages[messageIndex];
+            messageIndex++;
+        }
     }
 
     public void ResetState()
@@ -89,17 +93,16 @@ public class Snake : MonoBehaviour
         direction = Vector2Int.right;
         transform.position = Vector3.zero;
 
-     
         for (int i = 1; i < segments.Count; i++)
         {
             Destroy(segments[i].gameObject);
         }
 
-     
         segments.Clear();
         segments.Add(transform);
 
-     
+        messageIndex = 0;
+
         for (int i = 0; i < initialSize - 1; i++)
         {
             Grow();
@@ -158,5 +161,5 @@ public class Snake : MonoBehaviour
 
         transform.position = position;
     }
-
 }
+
