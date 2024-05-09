@@ -2133,13 +2133,6 @@ MonoBehaviour:
     - dx
     - Ayuda
     CorrectAnswer: 3
-  - Question: "Termina la f\xF3rmula de integraci\xF3n de una constante: \u222B5dx=**+C"
-    Answers:
-    - No existe
-    - Si existe
-    - Si existe
-    - 5x
-    CorrectAnswer: 4
   options:
   - {fileID: 922882827}
   - {fileID: 1241769141}

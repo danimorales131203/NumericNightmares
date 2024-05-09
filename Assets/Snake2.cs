@@ -1,9 +1,10 @@
+// Snake2.cs
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class Snake : MonoBehaviour
+public class Snake2 : MonoBehaviour
 {
     public Transform segmentPrefab;
     public Vector2Int direction = Vector2Int.right;
@@ -17,7 +18,7 @@ public class Snake : MonoBehaviour
     private Vector2Int input;
     private float nextUpdate;
 
-    private string[] eatMessages = { "Fórmula de integración por partes", "∫udv= ** −∫v**", "∫udv= ** −∫vdu", "∫udv= uv −∫vdu" };
+    private string[] eatMessages = { "Fórmula de integración de una constante", "∫k**=**+*", "∫kdx=**+C", "∫kdx=kx+C" };
     private int messageIndex = 0;
 
     private void Start()
