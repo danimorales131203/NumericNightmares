@@ -400,7 +400,7 @@ MonoBehaviour:
   direction: {x: 1, y: 0}
   speed: 20
   speedMultiplier: 1
-  initialSize: 4
+  initialSize: 2
   moveThroughWalls: 0
   infoText: {fileID: 1077569783}
 --- !u!1 &100653525
