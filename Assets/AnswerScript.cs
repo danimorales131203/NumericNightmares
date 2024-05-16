@@ -5,30 +5,31 @@ using UnityEngine.UI;
 
 public class AnswerScript : MonoBehaviour
 {
-    public bool isCorrect = false;
-    public QuizManager quizManager;
+    public bool isCorrect = false; // Indica si esta respuesta es correcta
+    public QuizManager quizManager; // Referencia al script QuizManager
 
-    public Color startColor;
+    public Color startColor; // Color inicial del botón
 
     private void Start()
     {
-        startColor = GetComponent<Image>().color;
+        startColor = GetComponent<Image>().color; // Obtiene el color inicial del botón al iniciar
     }
 
+    // Método llamado cuando se selecciona la respuesta
     public void Answer()
     {
-        if(isCorrect)
+        if(isCorrect) // Si la respuesta es correcta
         {
-            GetComponent<Image>().color = Color.green;
-            Debug.Log("Correct Answer");
-            quizManager.correct();
+            GetComponent<Image>().color = Color.green; // Cambia el color del botón a verde
+            Debug.Log("Correct Answer"); // Imprime en la consola que la respuesta es correcta
+            quizManager.correct(); // Llama al método correcto del quizManager
         }
-        else
+        else // Si la respuesta es incorrecta
         {
-            GetComponent<Image>().color = Color.red;
-            Debug.Log("Wrong Answer");
-            quizManager.wrong();
+            GetComponent<Image>().color = Color.red; // Cambia el color del botón a rojo
+            Debug.Log("Wrong Answer"); // Imprime en la consola que la respuesta es incorrecta
+            quizManager.wrong(); // Llama al método incorrecto del quizManager
         }
     }
-
 }
+

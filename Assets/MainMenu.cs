@@ -1,14 +1,16 @@
-using System.Xml.Schema;
+// Importa los espacios de nombres necesarios
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement; // Necesario para gestionar las escenas en Unity
  
-public class MainMenu : MonoBehaviour
+public class MainMenu : MonoBehaviour // Define una clase llamada MainMenu que hereda de MonoBehaviour
 {
+    // Este método se llama cuando se hace clic en el botón "Jugar" en el menú principal
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync(1); // Load the first level of the game
+        // Carga la escena número 2 de forma asíncrona (mientras el juego está en ejecución)
+        SceneManager.LoadSceneAsync(2);
     }
-
 }
+
