@@ -1,15 +1,15 @@
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class Food : MonoBehaviour
+public class Food3 : MonoBehaviour
 {
     public Collider2D gridArea;
 
-    private Snake snake;
+    private Snake3 snake;
 
     private void Awake()
     {
-        snake = FindObjectOfType<Snake>();
+        snake = FindObjectOfType<Snake3>();
     }
 
     private void Start()
@@ -21,12 +21,9 @@ public class Food : MonoBehaviour
     {
         Bounds bounds = gridArea.bounds;
 
-        // Pick a random position inside the bounds
-        // Round the values to ensure it aligns with the grid
         int x = Mathf.RoundToInt(Random.Range(bounds.min.x, bounds.max.x));
         int y = Mathf.RoundToInt(Random.Range(bounds.min.y, bounds.max.y));
 
-        // Prevent the food from spawning on the snake
         while (snake.Occupies(x, y))
         {
             x++;
@@ -50,5 +47,4 @@ public class Food : MonoBehaviour
     {
         RandomizePosition();
     }
-
 }
