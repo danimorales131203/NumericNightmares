@@ -9,8 +9,8 @@ public class MainMenu : MonoBehaviour // Define una clase llamada MainMenu que h
     // Este método se llama cuando se hace clic en el botón "Jugar" en el menú principal
     public void PlayGame()
     {
-        // Carga la escena número 2 de forma asíncrona (mientras el juego está en ejecución)
-        SceneManager.LoadSceneAsync(2);
+        // Carga la escena número 1 de forma asíncrona (mientras el juego está en ejecución)
+        SceneManager.LoadScene("Warning");
     }
 }
 

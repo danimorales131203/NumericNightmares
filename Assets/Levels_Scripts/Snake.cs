@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(BoxCollider2D))] // Se requiere un BoxCollider2D en el objeto
 public class Snake : MonoBehaviour // Define la clase Snake que hereda de MonoBehaviour
@@ -13,11 +14,14 @@ public class Snake : MonoBehaviour // Define la clase Snake que hereda de MonoBe
     public Text infoText; // Texto para mostrar mensajes
     
     public Animator animator; // Animator de la serpiente
-    
+    public GameObject phonePrefab; // Prefab del teléfono
+    public Collider2D gridArea; // Área del grid donde aparecerá la comida
+
     private List<Transform> segments = new List<Transform>(); // Lista de segmentos de la serpiente
     private Vector2Int direction = Vector2Int.right; // Dirección de movimiento
     private Vector2Int input; // Dirección de entrada
     private float nextUpdate; // Tiempo hasta la próxima actualización
+    private bool phoneSpawned = false; // Indica si el teléfono ha sido instanciado
 
     private string[] eatMessages = { // Mensajes mostrados al comer
         "Fórmula de integración por partes",
@@ -26,6 +30,11 @@ public class Snake : MonoBehaviour // Define la clase Snake que hereda de MonoBe
         "∫udv= uv −∫vdu"
     };
     private int messageIndex = 0; // Índice actual del mensaje
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     // Método llamado al inicio del juego
     private void Start()
@@ -59,15 +68,14 @@ public class Snake : MonoBehaviour // Define la clase Snake que hereda de MonoBe
                 input = Vector2Int.left;
             }
         }
+
+        animator.SetFloat("moveX", input.x);
+        animator.SetFloat("moveY", input.y);
     }
 
     // Método llamado en cada fixed frame rate frame
     private void FixedUpdate()
     {
-        // Actualiza la dirección de la animación
-        animator.SetFloat("MoveX", direction.x);
-        animator.SetFloat("MoveY", direction.y);
-
         // Verifica si es tiempo de actualizar la posición de la serpiente
         if (Time.time < nextUpdate)
         {
@@ -107,7 +115,23 @@ public class Snake : MonoBehaviour // Define la clase Snake que hereda de MonoBe
         {
             infoText.text = eatMessages[messageIndex];
             messageIndex++;
+
+            // Si se ha mostrado el último mensaje, instanciar el teléfono
+            if (messageIndex == eatMessages.Length && !phoneSpawned)
+            {
+                Instantiate(phonePrefab, GetRandomPosition(), Quaternion.identity);
+                phoneSpawned = true;
+            }
         }
+    }
+
+    // Obtiene una posición aleatoria en el grid
+    private Vector2 GetRandomPosition()
+    {
+        Bounds bounds = gridArea.bounds; // Obtén los límites del área del grid
+        int x = Mathf.RoundToInt(Random.Range(bounds.min.x, bounds.max.x));
+        int y = Mathf.RoundToInt(Random.Range(bounds.min.y, bounds.max.y));
+        return new Vector2(x, y);
     }
 
     // Reinicia el estado de la serpiente
@@ -132,6 +156,9 @@ public class Snake : MonoBehaviour // Define la clase Snake que hereda de MonoBe
         {
             Grow();
         }
+
+        // Resetea la aparición del teléfono
+        phoneSpawned = false;
     }
 
     // Verifica si la serpiente ocupa una posición específica
@@ -172,6 +199,10 @@ public class Snake : MonoBehaviour // Define la clase Snake que hereda de MonoBe
                 ResetState(); // Reinicia la serpiente
             }
         }
+        else if (other.gameObject.CompareTag("Phone")) // Si es teléfono
+        {
+            ChangeScene(); // Cambia la escena
+        }
     }
 
     // Método para atravesar una pared
@@ -189,5 +220,11 @@ public class Snake : MonoBehaviour // Define la clase Snake que hereda de MonoBe
         }
 
         transform.position = position; // Actualiza la posición
+    }
+
+    // Método para cambiar la escena
+    private void ChangeScene()
+    {
+        SceneManager.LoadScene("PhoneCall1"); // Cambia a la escena especificada
     }
 }
