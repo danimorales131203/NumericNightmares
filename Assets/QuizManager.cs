@@ -17,8 +17,13 @@ public class QuizManager : MonoBehaviour
     public Text QuestionTxt; // Texto de la pregunta
     public Text ScoreTxt; // Texto de la puntuación
 
+    public string allCorrectScene; // Nombre de la escena si todas son correctas
+    public string allWrongScene; // Nombre de la escena si todas son incorrectas
+
     int totalQuestions = 0; // Número total de preguntas
     public int score; // Puntuación actual
+    int correctAnswers = 0; // Número de respuestas correctas
+    int wrongAnswers = 0; // Número de respuestas incorrectas
 
     private void Start()
     {
@@ -27,24 +32,41 @@ public class QuizManager : MonoBehaviour
         generateQuestion(); // Genera la primera pregunta
     }
 
-    // Método para volver a intentar el quiz
-    public void retry()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Recarga la escena actual
-    }
-
     // Método llamado cuando se acaba el juego
     void GameOver()
     {
         Quizpanel.SetActive(false); // Desactiva el panel del quiz
         GoPanel.SetActive(true); // Activa el panel de finalización
         ScoreTxt.text = score + "/" + totalQuestions; // Actualiza el texto de puntuación
+
+        // Carga la escena correspondiente basada en el resultado del quiz
+        if (correctAnswers == totalQuestions)
+        {
+            SceneManager.LoadScene("Level2"); // Carga la escena de todas correctas
+        }
+        else if (wrongAnswers == totalQuestions)
+        {
+            SceneManager.LoadScene("DeathScene1"); // Carga la escena de todas incorrectas
+        }
+        else
+        {
+            // Si hay mezcla de correctas e incorrectas, mantener la lógica de éxito/fracaso según sea necesario
+            if (correctAnswers > wrongAnswers)
+            {
+                SceneManager.LoadScene("Level2"); // Carga la escena de éxito
+            }
+            else
+            {
+                SceneManager.LoadScene("DeathScene1"); // Carga la escena de fracaso
+            }
+        }
     }
 
     // Método llamado cuando la respuesta es correcta
     public void correct()
     {
         score += 1; // Aumenta la puntuación
+        correctAnswers += 1; // Aumenta el conteo de respuestas correctas
         QnA.RemoveAt(currentQuestion); // Elimina la pregunta actual de la lista
         StartCoroutine(waitForNext()); // Espera antes de mostrar la siguiente pregunta
     }
@@ -52,6 +74,7 @@ public class QuizManager : MonoBehaviour
     // Método llamado cuando la respuesta es incorrecta
     public void wrong()
     {
+        wrongAnswers += 1; // Aumenta el conteo de respuestas incorrectas
         QnA.RemoveAt(currentQuestion); // Elimina la pregunta actual de la lista
         StartCoroutine(waitForNext()); // Espera antes de mostrar la siguiente pregunta
     }
@@ -72,7 +95,7 @@ public class QuizManager : MonoBehaviour
             options[i].GetComponent<AnswerScript>().isCorrect = false; // Establece que la respuesta no es correcta
             options[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = QnA[currentQuestion].Answers[i]; // Establece el texto de las opciones
 
-            if(QnA[currentQuestion].CorrectAnswer == i+1)
+            if (QnA[currentQuestion].CorrectAnswer == i + 1)
             {
                 options[i].GetComponent<AnswerScript>().isCorrect = true; // Marca la respuesta correcta
             }
@@ -82,7 +105,7 @@ public class QuizManager : MonoBehaviour
     // Método para generar una pregunta aleatoria
     void generateQuestion()
     {
-        if(QnA.Count > 0)
+        if (QnA.Count > 0)
         {
             currentQuestion = Random.Range(0, QnA.Count); // Elige una pregunta aleatoria
 

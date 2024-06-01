@@ -9,8 +9,44 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: f157d56f061d22d43a066bb69f66546d
   - enabled: 1
+    path: Assets/Scenes/Warning.unity
+    guid: 72a58cf66501a9a419484aa492a37497
+  - enabled: 1
     path: Assets/Scenes/Level1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/PhoneCall1.unity
+    guid: a7a7c340cefb1a747875ebf5ce7f2d56
+  - enabled: 1
+    path: Assets/Scenes/DeathScene1.unity
+    guid: 7f97976a664a8794e9eb237c7026519f
+  - enabled: 1
+    path: Assets/Scenes/Level2.unity
+    guid: 5399d4a6e4c934e46882de8e2db892e3
+  - enabled: 1
+    path: Assets/Scenes/PhoneCall2.unity
+    guid: 80f19c86f1f693e40ba6cf38d4bb7962
+  - enabled: 1
+    path: Assets/Scenes/DeathScene2.unity
+    guid: a01355eb063890640822ff14e5027340
+  - enabled: 1
+    path: Assets/Scenes/Level3.unity
+    guid: 9146c0d289b8d2f41806f286d6d2e165
+  - enabled: 1
+    path: Assets/Scenes/PhoneCall3.unity
+    guid: e59adff9314994a4482ea8ff7c8db21d
+  - enabled: 1
+    path: Assets/Scenes/DeathScene3.unity
+    guid: 2637cdc497f26934f8a7c8efe21c1086
+  - enabled: 1
+    path: Assets/Scenes/FinalTest.unity
+    guid: a46754540c07bad49bdcca8f6479f745
+  - enabled: 1
+    path: Assets/Scenes/GoodEnding.unity
+    guid: aca1df4a2edc1804da221a7178384c3f
+  - enabled: 1
+    path: Assets/Scenes/BadEnding.unity
+    guid: f02bc1ae993afe54f8d4500fe79121a6
   - enabled: 1
     path: Assets/Scenes/GraphicNovel_1.unity
     guid: 47f9e1cb52cbd504a8eb92c030030139
